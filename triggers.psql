@@ -1,0 +1,36 @@
+-- Crear una función que se ejecutará en respuesta a la inserción en groups
+CREATE OR REPLACE FUNCTION create_enrollment_for_group()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Insertar un nuevo registro en enrollments utilizando la información de groups
+  INSERT INTO enrollments (user_id, group_id, activity_type)
+  VALUES (NEW.creator_id, NEW.group_id, 'group');  -- Ajusta según tus necesidades
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Crear el disparador que llama a la función anterior después de la inserción en groups
+CREATE TRIGGER trigger_create_enrollment
+AFTER INSERT ON groups
+FOR EACH ROW
+EXECUTE FUNCTION create_enrollment_for_group();
+
+
+-- Crear una función que se ejecutará en respuesta a la inserción en events
+CREATE OR REPLACE FUNCTION create_enrollment_for_event()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Insertar un nuevo registro en enrollments utilizando la información de events
+  INSERT INTO enrollments (user_id, event_id, activity_type)
+  VALUES (NEW.creator_id, NEW.event_id,'event');  -- Ajusta según tus necesidades
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Crear el disparador que llama a la función anterior después de la inserción en events
+CREATE TRIGGER trigger_create_enrollment
+AFTER INSERT ON events
+FOR EACH ROW
+EXECUTE FUNCTION create_enrollment_for_event();
