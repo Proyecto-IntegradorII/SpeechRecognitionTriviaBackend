@@ -49,6 +49,5 @@ async function updateScore(req, res) {
 
 module.exports = {
 	
-	recoverUserByEmail,
 	updateScore
 };
