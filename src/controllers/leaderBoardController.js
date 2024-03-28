@@ -12,7 +12,7 @@ async function updateScore(req, res) {
         // Obtiene el puntaje actual del usuario
         const { data: userData, error: userError } = await supabase
             .from('scores')
-            .select('score')
+            .select('*')
             .eq('user_id', user_id)
             .single();
 
