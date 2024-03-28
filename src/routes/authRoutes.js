@@ -13,7 +13,8 @@ const {
 	changeUserPassword,
 	newUserPassword,
 	saveChat,
-	getChat
+	getChat,
+	updateScore
 } = require("../controllers/authController");
 
 router.post("/login", loginUser);
@@ -28,6 +29,8 @@ router.put("/user/lockout", lockoutUser);
 router.post("/user/change/password", changeUserPassword);
 router.post("/user/newpassword", newUserPassword);
 router.post("/savechat", saveChat);
-router.get("/getchat/:user_id", getChat)
+router.get("/getchat/:user_id", getChat);
+router.post("/updatescore", updateScore);
+
 
 module.exports = router;

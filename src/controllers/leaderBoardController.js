@@ -4,7 +4,7 @@
 const { supabase } = require("../configs/databaseConfig");
 
 
-async function updateScore(req, res) {
+async function updateScores(req, res) {
 	try {
 
 		const {user_id, score} = req.body;
@@ -87,6 +87,6 @@ async function je(req, res) {
 }
 
 module.exports = {
-	updateScore,
+	updateScores,
 	je
 };

@@ -598,6 +598,53 @@ async function getChat(req, res) {
 	}
 }
 
+async function updateScore(req, res) {
+	try {
+
+		const {user_id, score} = req.body;
+
+        // Obtiene el puntaje actual del usuario
+        const { data: userData, error: userError } = await supabase
+            .from('scores')
+            .select('*')
+            .eq('user_id', user_id)
+            .single();
+
+        if (userError) {
+            throw userError;
+        }
+
+		console.log(userData);
+
+        let puntajeTotal;
+
+        if (userData) {
+            // Si el usuario ya tiene una entrada, actualiza el puntaje
+            const puntajeActual = parseInt(userData.score);
+            puntajeTotal = puntajeActual + score;
+
+            await supabase
+                .from('scores')
+                .update({ score: puntajeTotal.toString() })
+                .eq('user_id', user_id);
+
+				res.status(200).json({ success: true});
+        } else {
+            // Si el usuario no tiene una entrada, crea una nueva fila
+
+            await supabase
+                .from('scores')
+                .insert([{ user_id, score: score.toString() }]);
+
+				res.status(200).json({ success: true});
+        }
+
+        return { success: true, puntajeTotal };
+    } catch (err) {
+        return { success: false, error: err.message };
+    }
+}
+
 module.exports = {
 	loginUser,
 	loginGoogleUser,
@@ -611,5 +658,6 @@ module.exports = {
 	changeUserPassword,
 	newUserPassword,
 	saveChat,
-	getChat
+	getChat,
+	updateScore
 };
