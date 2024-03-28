@@ -18,6 +18,7 @@ const authRoutes = require("./src/routes/authRoutes");
 const userQuizRoutes = require("./src/routes/activitiesRoutes");
 const updateProfileRoutes = require("./src/routes/updateProfileRoutes");
 const activitiesRoutes = require("./src/routes/activitiesRoutes");
+const leaderBoardRoutes =require("./src/routes/leaderBoardRoutes");
 const app = express();
 
 const { configureCORS } = require("./src/middlewares/corsMiddleware");
@@ -32,6 +33,8 @@ app.use(configureCORS);
 app.use(authRoutes);
 app.use(updateProfileRoutes);
 app.use(activitiesRoutes);
+app.use(leaderBoardRoutes)
+
 
 // Iniciar el servidor
 app.listen(9000, () => {
