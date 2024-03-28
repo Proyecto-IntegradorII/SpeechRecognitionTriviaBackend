@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const {
-	updateScores,
-	je
+	updateScore,
+	getScores
 } = require("../controllers/leaderBoardController");
 
-router.post("/updatescores", updateScores);
-router.post("/je",je)
+router.post("/updatescore", updateScore);
+router.get("/getscores", getScores)
 
 module.exports = router;

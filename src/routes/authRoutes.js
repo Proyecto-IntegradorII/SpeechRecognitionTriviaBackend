@@ -30,7 +30,5 @@ router.post("/user/change/password", changeUserPassword);
 router.post("/user/newpassword", newUserPassword);
 router.post("/savechat", saveChat);
 router.get("/getchat/:user_id", getChat);
-router.post("/updatescore", updateScore);
-
 
 module.exports = router;
