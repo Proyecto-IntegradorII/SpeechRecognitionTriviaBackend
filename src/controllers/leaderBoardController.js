@@ -20,6 +20,8 @@ async function updateScore(req, res) {
             throw userError;
         }
 
+		console.log(userData);
+
         let puntajeTotal;
 
         if (userData) {
@@ -31,12 +33,16 @@ async function updateScore(req, res) {
                 .from('scores')
                 .update({ score: puntajeTotal.toString() })
                 .eq('user_id', user_id);
+
+				res.status(200).json({ success: true});
         } else {
             // Si el usuario no tiene una entrada, crea una nueva fila
 
             await supabase
                 .from('scores')
                 .insert([{ user_id, score: score.toString() }]);
+
+				res.status(200).json({ success: true});
         }
 
         return { success: true, puntajeTotal };
@@ -48,6 +54,5 @@ async function updateScore(req, res) {
 
 
 module.exports = {
-	
 	updateScore
 };
