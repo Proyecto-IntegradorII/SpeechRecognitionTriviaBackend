@@ -52,9 +52,7 @@ async function getScoreById(req, res) {
 
 	try {
 		const { data, error } = await supabase.from("scores").select("score").eq("user_id", user_id).single();
-		if (error) {
-			throw error;
-		}
+		
 		res.status(200).json({ success: true, data });
 	} catch (error) {
 		console.error(error);
