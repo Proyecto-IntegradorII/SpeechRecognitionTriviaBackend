@@ -46,6 +46,23 @@ async function updateScore(req, res) {
 	}
 }
 
+async function getScoreById(req, res) {
+
+	const {user_id} = req.body
+
+	try {
+		const { data, error } = await supabase.from("scores").select("score").eq("user_id", user_id).single();
+
+		if (error) {
+			throw error;
+		}
+
+		return data;
+	} catch (error) {
+		throw new Error("DB: Error fetching user data");
+	}
+}
+
 async function getScores(req, res) {
     try {
 		// Realiza una consulta para obtener los nombres de los usuarios y sus puntajes ordenados de mayor a menor
