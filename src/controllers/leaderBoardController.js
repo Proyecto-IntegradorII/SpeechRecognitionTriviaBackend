@@ -48,15 +48,24 @@ async function updateScore(req, res) {
 
 async function getScoreById(req, res) {
 
-	const { user_id } = req.body
-
 	try {
-		const { data, error } = await supabase.from("scores").select("score").eq("user_id", user_id).single();
-		
-		res.status(200).json({ success: true, data });
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ success: false, error: 'Error al obtener puntaje' });
+
+		const { user_id} = req.body;
+
+		// Obtiene el puntaje actual del usuario
+		const { data: userData, error: userError } = await supabase
+			.from("scores")
+			.select("*")
+			.eq('user_id', user_id)
+			.single();
+
+		console.log(userData);
+
+		res.status(200).json({ success: true, puntaje: userData.score });
+
+	} catch (err) {
+		console.log(err)
+		res.status(500).json({ success: false });
 	}
 }
 

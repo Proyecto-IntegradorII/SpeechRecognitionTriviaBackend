@@ -8,7 +8,7 @@ const {
 
 router.post("/updatescore", updateScore);
 router.get("/getscores", getScores);
-router.get("/score:user_id",getScoreById)
+router.get("/score",getScoreById)
 
 
 module.exports = router;
