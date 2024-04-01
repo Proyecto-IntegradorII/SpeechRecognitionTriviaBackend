@@ -26,7 +26,7 @@ async function updateScore(req, res) {
 
 			await supabase
 				.from('scores')
-				.update({ score: puntajeTotal.toString() })
+				.update({ score: score})
 				.eq('user_id', user_id);
 
 		} else {
