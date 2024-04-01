@@ -15,10 +15,10 @@ const express = require("express");
 
 //IMPORTAR RUTAS
 const authRoutes = require("./src/routes/authRoutes");
-const userQuizRoutes = require("./src/routes/activitiesRoutes");
+const chatRoutes = require("./src/routes/chatRoutes");
 const updateProfileRoutes = require("./src/routes/updateProfileRoutes");
 const activitiesRoutes = require("./src/routes/activitiesRoutes");
-const leaderBoardRoutes =require("./src/routes/leaderBoardRoutes");
+const leaderBoardRoutes = require("./src/routes/leaderBoardRoutes");
 const app = express();
 
 const { configureCORS } = require("./src/middlewares/corsMiddleware");
@@ -31,10 +31,10 @@ app.use(express.urlencoded({ extended: true }));
 //app.use(cors());
 app.use(configureCORS);
 app.use(authRoutes);
+app.use(chatRoutes);
 app.use(updateProfileRoutes);
 app.use(activitiesRoutes);
-app.use(leaderBoardRoutes)
-
+app.use(leaderBoardRoutes);
 
 // Iniciar el servidor
 app.listen(9000, () => {

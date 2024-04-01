@@ -1,0 +1,7 @@
+[DEFAULT]
+user=ocid1.user.oc1..aaaaaaaacdwz6j6q2iz2bkctvx7oao6mp3v3xs3c4rc2mq2aovfucvlolo7a
+fingerprint=bf:94:f4:cb:a9:1c:03:74:e4:41:c8:61:b0:30:fe:9a
+key_file=newkey.pem
+tenancy=ocid1.tenancy.oc1..aaaaaaaaayjnj7nztfs7xro2n55siv2625cd2slneyzbsjzzj645lr3w3lga
+region=sa-bogota-1
+pass_phrase=mypassphrase
