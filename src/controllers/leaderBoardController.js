@@ -50,13 +50,13 @@ async function getScoreById(req, res) {
 
 	try {
 
-		const { user_id} = req.body;
+		const { userId} = req.params;
 
 		// Obtiene el puntaje actual del usuario
 		const { data: userData, error: userError } = await supabase
 			.from("scores")
 			.select("*")
-			.eq('user_id', user_id)
+			.eq('user_id', userId)
 			.single();
 
 		console.log(userData);
