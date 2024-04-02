@@ -1,7 +1,8 @@
 import sys
 import oci
+import requests
 
-def transcribe_audio(file_path):
+def transcribe_audio(file_url):
     # config = oci.config.from_file()
     # Especifica la ruta del archivo de configuración
     # config_path = "C:/Users/aless/sa-bogota-1"
@@ -15,24 +16,34 @@ def transcribe_audio(file_path):
     object_storage_client = oci.object_storage.ObjectStorageClient(config)
     namespace = object_storage_client.get_namespace().data
 
+    # Descarga el archivo de la URL
+    response = requests.get(file_url)
+    if response.status_code != 200:
+        print("Error al descargar el archivo")
+        return
+
+    # Guarda el contenido del archivo en una variable
+    audio_data = response.content
+
 
     # --------------------------SUBIR UN ARCHIVO--------------------------
 
     object_storage = oci.object_storage.ObjectStorageClient(config)
 
     # Ejemplo de cómo leer el contenido del archivo de audio
-    with open(file_path, "rb") as audio_file:
-        audio_data = audio_file.read()
+    # with open(file_path, "rb") as audio_file:
+    #     audio_data = audio_file.read()
 
-    with open(file_path, "rb") as f:
-        put_object_response = object_storage.put_object(
-            namespace_name=namespace,
-            bucket_name = bucket_name, 
-            object_name = file_path.split("\\")[-1],
-            # file_path.split("/")[-1], 
-            put_object_body = f)
+    object_name="corto.mp3"
+    # with open(file_path, "rb") as f:
+    put_object_response = object_storage.put_object(
+        namespace_name=namespace,
+        bucket_name = bucket_name, 
+        object_name = object_name,
+        # file_path.split("/")[-1], 
+        put_object_body = audio_data)
 
-    file_path=file_path.split("\\")[-1]
+    file_path=object_name
     # re-run the list command on the bucket to check if the new file is present:
     objects = object_storage_client.list_objects(namespace, bucket_name).data
     count = 1
@@ -163,6 +174,7 @@ if __name__ == "__main__":
         sys.exit(1)
     
     file_path = sys.argv[1]
+    "https://drive.google.com/uc?export=download&id=16RYx3h6s2lsgn2f5a3d4QR5_uFDDW3l_"
 
     # Llamar a la función para transcribir el audio
     transcription_text = transcribe_audio(file_path)

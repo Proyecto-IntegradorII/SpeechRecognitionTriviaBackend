@@ -12,6 +12,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const bodyParser = require("body-parser");
 
 //IMPORTAR RUTAS
 const authRoutes = require("./src/routes/authRoutes");
@@ -19,7 +20,12 @@ const chatRoutes = require("./src/routes/chatRoutes");
 const updateProfileRoutes = require("./src/routes/updateProfileRoutes");
 const activitiesRoutes = require("./src/routes/activitiesRoutes");
 const leaderBoardRoutes = require("./src/routes/leaderBoardRoutes");
+const uploadRoutes = require("./src/routes/uploadRoutes");
 const app = express();
+
+// Configurar body-parser para aumentar el límite de tamaño de las solicitudes
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 const { configureCORS } = require("./src/middlewares/corsMiddleware");
 
@@ -35,6 +41,7 @@ app.use(chatRoutes);
 app.use(updateProfileRoutes);
 app.use(activitiesRoutes);
 app.use(leaderBoardRoutes);
+app.use(uploadRoutes);
 
 // Iniciar el servidor
 app.listen(9000, () => {

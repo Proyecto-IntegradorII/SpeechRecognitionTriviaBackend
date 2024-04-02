@@ -24,11 +24,11 @@ async function uploadImage(req, res) {
 	try {
 		const file = req.file;
 		const fileName = file.originalname;
-		console.log(file);
+		console.log("file->" + file);
 		// Crear el objeto de metadatos del archivo
 		const lastId = await getLastId();
 		const fileMetadata = {
-			name: `avatar${lastId + 1}.jpg`,
+			name: `audio${lastId + 1}.mp3`,
 			parents: [folderId], // Reemplaza con el ID de la carpeta en Google Drive
 		};
 		const media = {
@@ -45,7 +45,9 @@ async function uploadImage(req, res) {
 
 		console.log("File ID:", response.data.id);
 
-		res.json(lastId + 1);
+		const fileID = response.data.id;
+		const downloadLink = `https://drive.google.com/uc?export=download&id=${fileID}`;
+		res.json(downloadLink);
 	} catch (error) {
 		//console.error(error);
 		res.json(error.message);

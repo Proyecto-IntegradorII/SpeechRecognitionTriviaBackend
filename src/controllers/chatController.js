@@ -55,21 +55,15 @@ async function getChaat(req, res) {
 async function ociTranscription(req, res) {
 	try {
 		console.log(req.body);
-		// Verificar si se proporcionó un archivo de audio en la solicitud
-		if (!req.file) {
-			return res.status(400).json({ error: "No se proporcionó un archivo de audio." });
-		}
-
-		// Obtener el archivo de audio de la solicitud
-		const audioFile = req.file;
+		const { file_url } = req.body;
 
 		// Ruta al script Python
 		const pythonScriptPath = path.join(__dirname, "../../transcribe.py");
 
-		console.log("AUDIO PATH--->", audioFile.path);
+		console.log("AUDIO URL--->", file_url);
 
 		// Ejecutar el script Python como un proceso secundario
-		const pythonProcess = spawn("python", ["transcribe.py", audioFile.path]); // Pasar la ruta del archivo de audio
+		const pythonProcess = spawn("python", ["transcribe.py", file_url]); // Pasar la ruta del archivo de audio
 
 		let transcriptionData = "";
 
@@ -94,12 +88,6 @@ async function ociTranscription(req, res) {
 				res.status(500).json({ success: false, error: "Error al obtener la transcripción." });
 			}
 		});
-
-		// pythonProcess.on("close", (code) => {
-		// 	console.log(`child process exited with code ${code}`);
-		// 	// Puedes enviar una respuesta al cliente aquí con los datos de transcripción
-		// 	res.status(200).json({ message: "Transcripción completada", transcriptionData });
-		// });
 	} catch (error) {
 		console.error(error);
 		res
