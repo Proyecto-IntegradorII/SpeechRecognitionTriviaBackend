@@ -174,7 +174,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     file_path = sys.argv[1]
-    "https://drive.google.com/uc?export=download&id=16RYx3h6s2lsgn2f5a3d4QR5_uFDDW3l_"
 
     # Llamar a la función para transcribir el audio
     transcription_text = transcribe_audio(file_path)
